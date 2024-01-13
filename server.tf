@@ -38,12 +38,12 @@ resource "aws_security_group" "instance_security_group" {
 }
 
 resource "aws_security_group_rule" "ec2_outbound_postgres_rule" {
-  from_port         = 5432
-  protocol          = "tcp"
-  security_group_id = aws_security_group.instance_security_group.id
-  to_port           = 5432
-  type              = "egress"
-  cidr_blocks       = ["0.0.0.0/0"]
+  from_port                = 5432
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.instance_security_group.id
+  to_port                  = 5432
+  type                     = "egress"
+  source_security_group_id = aws_security_group.db_security_group.id
 }
 
 resource "aws_security_group_rule" "instance_outbound_rule" {

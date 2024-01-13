@@ -12,7 +12,7 @@
           "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
         },
         "StringLike": {
-          "token.actions.githubusercontent.com:sub": "repo:mancuniansam/piano-lessons*"
+          "token.actions.githubusercontent.com:sub": "repo:MancunianSam/piano-lessons*"
         }
       }
     }

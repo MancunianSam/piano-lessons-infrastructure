@@ -15,7 +15,8 @@
       ],
       "Resource": [
         "arn:aws:ecs:eu-west-2:${account_number}:cluster/piano-lessons",
-        "arn:aws:ecs:eu-west-2:${account_number}:container-instance/piano-lessons/${instance_id}"
+        "arn:aws:ecs:eu-west-2:${account_number}:container-instance/piano-lessons/${instance_id_1}",
+        "arn:aws:ecs:eu-west-2:${account_number}:container-instance/piano-lessons/${instance_id_2}"
       ]
     },
     {

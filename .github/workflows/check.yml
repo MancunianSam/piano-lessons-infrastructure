@@ -1,14 +1,43 @@
-name: Deploy
-
+name: 'Terraform check'
 on:
-  push:
-    branches:
-      - main
-
+  pull_request:
+permissions:
+  id-token: write
+  contents: write
 jobs:
-  deploy:
+  terraform-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Run formatting checks
-        run: terraform fmt --check --recursive
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure AWS credentials for S3 state file access
+        uses: aws-actions/configure-aws-credentials@v4.0.1
+        with:
+          role-to-assume: arn:aws:iam::715102664058:role/GithubTerraformRole
+          aws-region: eu-west-2
+          role-session-name: TerraformRole
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check --recursive
+      - name: Terraform Init
+        id: init
+        run: terraform init
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate
+      - name: Terraform Plan
+        run: |
+          terraform plan -no-color -out=out > /dev/null
+          terraform show -no-color out > out.plan
+          echo -e "\`\`\`\n$(cat out.plan)\n\`\`\`" > out.plan
+      - name: Add comment
+        run: |
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/MancunianSam/${{github.event.repository.name}}/issues/${{github.event.number}}/comments \
+            -f body="$(cat out.plan)"
+        env:
+          GITHUB_OWNER: MancunianSam
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}

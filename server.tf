@@ -76,7 +76,7 @@ resource "aws_iam_role" "ecs_task" {
 }
 
 resource "aws_iam_policy" "ec2_policy" {
-  policy = templatefile("./templates/ec2_policy.json.tpl", { account_number = data.aws_caller_identity.current.account_id, instance_id = aws_instance.main.id })
+  policy = templatefile("./templates/ec2_policy.json.tpl", { account_number = data.aws_caller_identity.current.account_id, instance_id_1 = aws_instance.main[0].id, instance_id_2 = aws_instance.main[1].id })
   name   = "EC2ServerPolicy"
 }
 
@@ -96,6 +96,7 @@ resource "aws_iam_instance_profile" "instance_profile" {
 }
 
 resource "aws_instance" "main" {
+  count                       = 2
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.public[0].id
@@ -168,6 +169,7 @@ resource "aws_ecs_cluster" "cluster" {
 
 
 resource "aws_eip" "instance_eip" {
-  instance = aws_instance.main.id
+  count    = 2
+  instance = aws_instance.main[count.index].id
 }
 

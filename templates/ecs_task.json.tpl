@@ -10,7 +10,7 @@
       },
       {
         "name": "BASE_URL",
-        "value": "https://clairepalmerpiano.co.uk"
+        "value": "https://app.clairepalmerpiano.co.uk"
       }
     ],
     "secrets": [
@@ -25,6 +25,14 @@
       {
         "name": "AUTH_SECRET",
         "valueFrom": "/mgmt/auth/secret"
+      },
+      {
+        "name": "GOOGLE_CLIENT_ID",
+        "valueFrom": "/mgmt/google/id"
+      },
+      {
+        "name": "GOOGLE_CLIENT_SECRET",
+        "valueFrom": "/mgmt/google/secret"
       },
       {
         "name": "SENDGRID_API_KEY",

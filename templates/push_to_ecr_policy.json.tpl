@@ -1,6 +1,12 @@
 {
   "Statement": [
     {
+      "Sid": "VisualEditor0",
+      "Effect": "Allow",
+      "Action": "ecs:UpdateService",
+      "Resource": "arn:aws:ecs:eu-west-2:715102664058:service/piano-lessons/piano-lessons-service"
+    },
+    {
       "Action": [
         "sts:GetServiceBearerToken",
         "ecr:CompleteLayerUpload",

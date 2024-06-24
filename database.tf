@@ -19,7 +19,7 @@ resource "aws_db_instance" "database" {
   allocated_storage         = 20
   instance_class            = "db.t3.micro"
   engine                    = "postgres"
-  engine_version            = "15.3"
+  engine_version            = "16.3"
   username                  = "piano"
   password                  = random_password.db_password.result
   db_name                   = "pianolessons"

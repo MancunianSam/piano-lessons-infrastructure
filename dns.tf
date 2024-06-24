@@ -1,9 +1,10 @@
 resource "aws_route53_zone" "main" {
-  name = "app.clairepalmerpiano.co.uk"
+  name = "webapp.clairepalmerpiano.co.uk"
 }
 
 resource "aws_acm_certificate" "certificate" {
-  domain_name = "app.clairepalmerpiano.co.uk"
+  validation_method = "DNS"
+  domain_name       = "webapp.clairepalmerpiano.co.uk"
 }
 
 resource "aws_route53_record" "records" {

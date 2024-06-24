@@ -10,7 +10,11 @@
       },
       {
         "name": "BASE_URL",
-        "value": "https://app.clairepalmerpiano.co.uk"
+        "value": "https://webapp.clairepalmerpiano.co.uk"
+      },
+      {
+        "name": "DB_PARAMS",
+        "value": "?ssl=true&sslrootcert=/play/eu-west-2-bundle.pem&sslmode=verify-full"
       }
     ],
     "secrets": [
@@ -65,6 +69,10 @@
       {
         "name": "CONTACT_PHONE",
         "valueFrom": "/mgmt/contact"
+      },
+      {
+        "name": "CLOUDFRONT_DOMAIN",
+        "valueFrom": "/mgmt/cloudfront/distribution"
       }
     ],
     "networkMode": "awsvpc",

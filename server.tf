@@ -3,7 +3,7 @@ data "aws_ami" "amazon_linux" {
 
   filter {
     name   = "name"
-    values = ["al2022-ami-ecs-hvm-2022.0.20220411-x86_64-ebs"]
+    values = ["al2023-ami-ecs-hvm-2023.0.20240610-kernel-6.1-x86_64"]
   }
   owners = ["591542846629"]
 }
@@ -73,6 +73,16 @@ resource "aws_iam_role" "ec2_role" {
 resource "aws_iam_role" "ecs_task" {
   assume_role_policy = templatefile("./templates/assume_role.json.tpl", { service = "ecs-tasks" })
   name               = "ECSTaskRole"
+}
+
+resource "aws_iam_policy" "ecs_task_policy" {
+  name   = "ECSTaskPolicy"
+  policy = templatefile("${path.module}/templates/ecs_task_policy.json.tpl", {})
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_task_attachment" {
+  policy_arn = aws_iam_policy.ecs_task_policy.arn
+  role       = aws_iam_role.ecs_task.name
 }
 
 resource "aws_iam_policy" "ec2_policy" {
